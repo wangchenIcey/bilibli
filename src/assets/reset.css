@@ -1,0 +1,105 @@
+html {
+  color: #fff;
+  margin: 0;
+  padding: 0;
+  font: 14px -apple-system, BlinkMacSystemFont, Helvetica Neue, Helvetica, Arial, PingFang SC, Hiragino Sans GB, Microsoft YaHei, sans-serif;
+}
+
+body, dl, dt, dd, ul, ol, li, pre, form, fieldset, input, blockquote, th, td {
+  margin: 0;
+  padding: 0;
+  font-size: 14px;
+}
+
+h1, h2, h3, h4, h4, h5 {
+  margin: 0;
+  padding: 0;
+  cursor: pointer;
+}
+
+ul, li {
+  list-style: none;
+  font-size: 14px;
+  font-weight: 400;
+  color: #666;
+}
+
+input {
+  -web-kit-appearance: none;
+  -moz-appearance: none;
+  outline: 0;
+  border: 1px solid #666;
+  border-radius: 10px;
+  padding: 0;
+}
+
+a:link {
+  color: #00a1d6;
+}
+
+a:visited {
+  color: #00a1d6;
+}
+
+a:hover {
+  color: #00a1d6;
+}
+
+a:active {
+  color: #00a1d6;
+}
+a {
+  color: #00a1d6;
+}
+a {
+  text-decoration: none;
+}
+
+/*正常的未被访问过的链接*/
+
+a:link {
+  text-decoration: none;
+}
+
+/*已经访问过的链接*/
+
+a:visited {
+  text-decoration: none;
+}
+
+/*鼠标划过(停留)的链接*/
+
+a:hover {
+  text-decoration: none;
+}
+
+/* 正在点击的链接，鼠标在元素上按下还没有松开*/
+
+a:active {
+  text-decoration: none;
+}
+
+/* 获得焦点的时候 鼠标松开时显示的颜色*/
+
+a:focus {
+  text-decoration: none;
+}
+
+.color22 {
+  color: #87c8e2;
+}
+
+.color33 {
+  color: #ea7b99;
+}
+
+.cover-background {
+  pointer-events: none;
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: 0;
+  width: 100%;
+  height: 100px;
+  background: linear-gradient(rgba(0, 0, 0, .4), transparent);
+}

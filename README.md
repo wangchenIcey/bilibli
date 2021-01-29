@@ -1,4 +1,3 @@
-# vblog
 
 ## Project setup
 ```

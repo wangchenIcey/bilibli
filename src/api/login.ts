@@ -41,6 +41,12 @@ export function getUserNav() {
     }).then()
 }
 
+export function searchDefault() {
+    return request({
+        url: 'searchDefault',
+    }).then()
+}
+
 
 export function QR() {
     return request({

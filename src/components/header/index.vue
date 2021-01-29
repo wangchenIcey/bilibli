@@ -4,7 +4,7 @@
       <miniHeader></miniHeader>
       <div class="bili-header" :style="`background-image: url(${pic});`">
         <div class="taper-line"></div>
-        <animatedBanner :list="animatedList" />
+        <animatedBanner v-if="is_split_layer" :list="animatedList" />
       </div>
     </div>
     <bwarp></bwarp>
@@ -30,6 +30,7 @@ interface data {
   translateX2: number;
   opacity: number;
   list: any;
+  is_split_layer:number
 }
 interface e {
   style: object;
@@ -47,12 +48,16 @@ export default defineComponent({
       translateX: 0,
       translateX2: 0,
       opacity: 0,
-      list:{layers:[]}
+      list:{layers:[]},
+      is_split_layer:0
     });
     onMounted(() => {
       getBgimg().then((r) => {
         pic.value = r.data.data.litpic;
-        data.list = JSON.parse(r.data.data.split_layer)
+        data.is_split_layer = r.data.data.is_split_layer
+        if(data.is_split_layer == 1){
+          data.list = JSON.parse(r.data.data.split_layer)
+        }
       });
       data.domWidth = document.querySelector(".onHeader").clientWidth;
     });
@@ -72,6 +77,7 @@ export default defineComponent({
       return Arr;
     });
     const Move = (e) => {
+      if(data.is_split_layer === 0) return;
       document.querySelectorAll(".layer .layerchild").forEach((e) => {
         e.setAttribute("class", "layerchild");
       });
@@ -102,6 +108,8 @@ export default defineComponent({
       }
     };
     const out = () => {
+      if(data.is_split_layer === 0) return;
+
       document.querySelectorAll(".layer .layerchild").forEach((e) => {
         e.setAttribute("class", "layerchild translayer");
       });

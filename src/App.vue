@@ -8,7 +8,8 @@ export default {
   name: "App",
   setup(){
     provide('state',reactive({
-      user:{}
+      user:{},
+      sortList:[]
     }))
   }
 };

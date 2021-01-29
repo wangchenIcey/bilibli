@@ -19,17 +19,26 @@
           <li class="nav-link-item"><a href="" class="link">漫画</a></li>
           <li class="nav-link-item"><a href="" class="link">赛事</a></li>
           <li class="nav-link-item"><a href="" class="link">颁奖</a></li>
-          <li class="nav-link-item"><a href="" class="link"><i
-                style="margin-right: 5px"
-                class="iconfont iconshouji"
-              ></i>下载APP</a></li>
+          <li class="nav-link-item">
+            <a href="" class="link"
+              ><i style="margin-right: 5px" class="iconfont iconshouji"></i
+              >下载APP</a
+            >
+          </li>
         </ul>
       </div>
       <div class="nav-search-box">
         <div class="nav-search">
           <form id="nav_searchform">
-            <input type="text" class="nav-search-keyword" />
-            <div class="nav-search-btn"><i class="iconfont iconfangdajing"></i></div>
+            <input
+              type="text"
+              class="nav-search-keyword"
+              :placeholder="searchDefaultData.show_name"
+              v-model="searchValue"
+            />
+            <div class="nav-search-btn" @click="search">
+              <i class="iconfont iconfangdajing"></i>
+            </div>
           </form>
         </div>
       </div>
@@ -78,21 +87,39 @@
 </template>
 
 <script lang='ts'>
-import { defineComponent, inject, onMounted, toRefs } from "vue";
-import { getUserNav } from "../../api/login";
+import { defineComponent, inject, onMounted, reactive, toRefs } from "vue";
+import { getUserNav, searchDefault } from "../../api/login";
 interface state {
   user: object;
+}
+interface data {
+  searchDefaultData: any;
+  searchValue: string;
 }
 export default defineComponent({
   setup() {
     let state: state = inject("state");
+    let data: data = reactive({
+      searchDefaultData: {},
+      searchValue: "",
+    });
     onMounted(async () => {
+      let searchDefaultData = await searchDefault();
+      data.searchDefaultData = searchDefaultData.data.data;
       let navres = await getUserNav();
       state.user = navres.data;
-      console.log(state.user);
     });
+    const search = () => {
+      data.searchValue === ""
+        ? window.open(data.searchDefaultData.url)
+        : window.open(
+            `https://search.bilibili.com/all?keyword=${data.searchValue}&from_source=nav_suggest_new`
+          );
+    };
     return {
       ...toRefs(state),
+      ...toRefs(data),
+      search,
     };
   },
 });
@@ -170,9 +197,9 @@ export default defineComponent({
           display: flex;
           justify-content: center;
           align-items: center;
-          i{
-            color:#505050;
-           font-size: 16px;
+          i {
+            color: #505050;
+            font-size: 16px;
           }
         }
       }
@@ -190,7 +217,7 @@ export default defineComponent({
         display: flex;
         margin-left: 12px;
         align-items: center;
-        font-weight: 300;;
+        font-weight: 300;
         cursor: pointer;
         .mini-avatar {
           width: 36px;

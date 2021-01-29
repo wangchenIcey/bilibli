@@ -6,3 +6,16 @@ export function getBgimg () {
     url: `getBgimg`
   })
 }
+
+
+export function online () {
+  return request({
+    url: `online`
+  })
+}
+
+export function sort (){
+  return request({
+    url: `sort`
+  })
+}

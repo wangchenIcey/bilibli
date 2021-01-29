@@ -11,10 +11,12 @@
       </div>
       <span class="tab-line-itnl"></span>
       <div class="channel-menu-itnl">
-        <span v-for="i in navMenuConfig" :key="i.tid">
+        <span v-for="i in navList" :key="i.tid">
           <div class="item">
-            <a href="" class="name">
-              <span>{{i.name}}<em>123</em></span>
+            <a :href="i.route" class="name">
+              <span
+                >{{ i.name }}<em v-if="i.tid">{{ i.count||'--' }}</em></span
+              >
             </a>
           </div>
         </span>
@@ -71,22 +73,41 @@
 </template>
 
 <script lang='ts'>
-import { onMounted, reactive, toRefs } from "vue";
+import { computed, onMounted, reactive, toRefs } from "vue";
 import * as jsondata from "../../menu.json";
+import { online } from "../../api/header";
 // const jsondata = require('../../menu.json')
+interface state {
+  navMenuConfig: object;
+  onlineDataList: any;
+}
 export default {
   setup() {
     const state = reactive({
       navMenuConfig: [],
+      onlineDataList: {},
     });
-    onMounted(() => {
-      console.log(<any>jsondata.default.Fe);
-      <any>jsondata.default.Fe.splice(0, 1);
-      state.navMenuConfig = <any>jsondata.default.Fe;
-      console.log(state.navMenuConfig)
+    onMounted(async () => {
+      let onlineData = await online();
+      state.onlineDataList = onlineData.data.data.region_count;
+    });
+    const navList = computed(() => {
+      let navList = jsondata.default.Fe;
+      Object.keys(navList).map((e) => {
+        navList[e].count = state.onlineDataList[navList[e].tid];
+        if (navList[e].tid == 998) {
+          navList[e].count =
+            state.onlineDataList[177] +
+            state.onlineDataList[23] +
+            state.onlineDataList[11];
+        }
+        navList[e].count = navList[e].count > 999 ? "999+" : navList[e].count;
+      });
+      return navList;
     });
     return {
       ...toRefs(state),
+      navList,
     };
   },
 };

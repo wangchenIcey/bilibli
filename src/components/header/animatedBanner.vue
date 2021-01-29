@@ -50,7 +50,6 @@ export default defineComponent({
       //canvas dimensions
       var W = document.querySelector(".animated-banner").clientWidth;
       var H = document.querySelector(".animated-banner").clientHeight;
-      console.log(W, H);
       canvas.width = W;
       canvas.height = H;
       //snowflake particles
